@@ -1,5 +1,13 @@
 # akka-streams-experiments
 
+
+## get scala-cli
+
+```bash
+brew install Virtuslab/scala-cli/scala-cli
+```
+
+## then run it
 ````bash
 $ scala-cli run main.scala
 
