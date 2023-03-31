@@ -19,11 +19,14 @@ object Main extends App {
     implicit val system: ActorSystem = ActorSystem("QuickStart")
     implicit val mat: Materializer = ActorMaterializer()
 
-    val source = Source(1 to 5)
+    val Parallelism = 3
+    val MaxRetries = 2
+
+    val source = Source(1 to 10)
 
     // A Business Logic that fails for not even input
     // otherwise: 2 -> "number: 2"
-    val myBusinessLogicFlow = Flow[Int].mapAsync(1)(n =>
+    val myBusinessLogicFlow = Flow[Int].mapAsync(Parallelism)(n =>
         Future {
             if (n % 2 == 0) s"number: $n"
             else throw new RuntimeException("it failed")
@@ -42,7 +45,7 @@ object Main extends App {
 
     // the graph
     source
-      .via(myBusinessLogicFlow retrying 1 divertErrors(deadletterSink))
+      .via(myBusinessLogicFlow retrying MaxRetries divertErrors(deadletterSink))
       .to(sink)
       .run()
 }

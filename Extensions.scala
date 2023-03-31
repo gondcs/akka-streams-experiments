@@ -39,14 +39,13 @@ object FlowExtensions {
             RetryFlow.withBackoff(
                 minBackoff = 10.millis,
                 maxBackoff = 5.seconds,
-                randomFactor = 0d,
+                randomFactor = 1d,
                 maxRetries = times,
                 flow = f)({
                     case (in, Left(_)) =>
                         println(s"retry item:[$in]")
                         Some(in)
-                    case (in, _) =>
-                        println(s"stop retring item:[$in]")
+                    case (in, Right(_)) =>
                         Some(in)
                 })
     }
