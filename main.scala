@@ -22,6 +22,8 @@ object Main extends App {
     val Parallelism = 3
     val MaxRetries = 2
 
+    // Source: it could be almost whatever you want
+    // See: https://doc.akka.io/docs/alpakka/current/index.html
     val source = Source(1 to 10)
 
     // A Business Logic that fails for not even input
@@ -33,6 +35,7 @@ object Main extends App {
         }.safe(n)
     )
     // print results
+    // See: https://doc.akka.io/docs/alpakka/current/index.html
     val sink = Sink.foreach {
         item: Any => println(s"result - item:[$item]")
     }
