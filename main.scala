@@ -28,7 +28,7 @@ object Main extends App {
 
     // A Business Logic that fails for not even input
     // otherwise: 2 -> "number: 2"
-    val myBusinessLogicFlow = Flow[Int].mapAsync(Parallelism)(n =>
+    val myBusinessLogicFlow = Flow[Int].mapAsyncUnordered(Parallelism)(n =>
         Future {
             if (n % 2 == 0) s"number: $n"
             else throw new RuntimeException("it failed")

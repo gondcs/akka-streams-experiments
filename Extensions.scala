@@ -43,10 +43,11 @@ object FlowExtensions {
                 maxRetries = times,
                 flow = f)({
                     case (in, Left(_)) =>
-                        println(s"retry item:[$in]")
+                        println(s"retry left item:[$in]")
                         Some(in)
                     case (in, Right(_)) =>
-                        Some(in)
+                        println(s"i won't retry right item:[$in]")
+                        None
                 })
     }
 
